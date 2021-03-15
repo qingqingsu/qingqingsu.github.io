@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ES6——遍历对象属性的几种方式 | Su Qingqing</title><meta name="author" content="Su Qingqing"><meta name="copyright" content="Su Qingqing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JavaScript遍历对象的几种方式1. 自身可枚举属性 Object.keys()方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和for...in循环遍历该对象时返回的顺序一致。如果对象的键-值都不可枚举，那么将返回由键组成的数组。  这是合理的，因为大多数时候只需要关注对象自身的属性。 来看看一个对象拥有自身和继承属性的例子，Object.keys()只返回自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6——遍历对象属性的几种方式">
+<meta property="og:url" content="https://qingqingsu.github.io/2021/01/13/ES6%E2%80%94%E2%80%94%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Su Qingqing">
+<meta property="og:description" content="JavaScript遍历对象的几种方式1. 自身可枚举属性 Object.keys()方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和for...in循环遍历该对象时返回的顺序一致。如果对象的键-值都不可枚举，那么将返回由键组成的数组。  这是合理的，因为大多数时候只需要关注对象自身的属性。 来看看一个对象拥有自身和继承属性的例子，Object.keys()只返回自">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-01-13T13:43:03.000Z">
+<meta property="article:modified_time" content="2021-03-15T11:37:53.744Z">
+<meta property="article:author" content="Su Qingqing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/flower.jfif"><link rel="canonical" href="https://qingqingsu.github.io/2021/01/13/ES6%E2%80%94%E2%80%94%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-15 19:37:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Su Qingqing</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ES6——遍历对象属性的几种方式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-01-13T13:43:03.000Z" title="Created 2021-01-13 21:43:03">2021-01-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-15T11:37:53.744Z" title="Updated 2021-03-15 19:37:53">2021-03-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="JavaScript遍历对象的几种方式"><a href="#JavaScript遍历对象的几种方式" class="headerlink" title="JavaScript遍历对象的几种方式"></a>JavaScript遍历对象的几种方式</h3><h4 id="1-自身可枚举属性"><a href="#1-自身可枚举属性" class="headerlink" title="1. 自身可枚举属性"></a>1. 自身可枚举属性</h4><blockquote>
+<p><code>Object.keys()</code>方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和<code>for...in</code>循环遍历该对象时返回的顺序一致。如果对象的键-值都不可枚举，那么将返回由键组成的数组。</p>
+</blockquote>
+<p>这是合理的，因为大多数时候只需要关注对象自身的属性。</p>
+<h5 id="来看看一个对象拥有自身和继承属性的例子，Object-keys-只返回自己的属性键"><a href="#来看看一个对象拥有自身和继承属性的例子，Object-keys-只返回自己的属性键" class="headerlink" title="来看看一个对象拥有自身和继承属性的例子，Object.keys()只返回自己的属性键"></a>来看看一个对象拥有自身和继承属性的例子，<code>Object.keys()</code>只返回自己的属性键</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let simpleColors &#x3D; &#123;</span><br><span class="line">   colorA: &#39;white&#39;,</span><br><span class="line">   colorB: &#39;black&#39;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let natureColors &#x3D; &#123;</span><br><span class="line">   colorC: &#39;green&#39;,</span><br><span class="line">   colorD: &#39;yellow&#39;</span><br><span class="line">&#125;;</span><br><span class="line">Object.setPrototypeOf(natureColors, simpleColors);</span><br><span class="line">console.dir(natureColors);&#x2F;&#x2F;simpleColors对象在natureColors原型上</span><br><span class="line">console.log(Object.keys(natureColors)); &#x2F;&#x2F;[&quot;colorC&quot;, &quot;colorD&quot;]</span><br><span class="line">console.log(natureColors[&#39;colorA&#39;]); &#x2F;&#x2F;white</span><br><span class="line">console.log(natureColors[&#39;colorB&#39;]); &#x2F;&#x2F;black</span><br></pre></td></tr></table></figure>
+
+<p><code>Object.setPrototype()</code>方法设置一个指定的对象的原型到另一个对象或null</p>
+<p><code>Object.keys(natureColors)</code>返回<code>natureColors</code>对象自身可枚举属性键:<code>[&#39;colorC&#39;, &#39;colorD&#39;]</code>。<code>natureColors</code>包含从<code>simpleColors</code>原型对象继承的属性，但是<code>Object.keys()</code>函数会跳过它们。<code>Object.keys()</code>函数会跳过它们。<code>Object.value和Object.entries()</code>也都是返回一个给定对象自身可枚举属性的键值对数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let simpleColors &#x3D; &#123;</span><br><span class="line">      colorA: &#39;white&#39;,</span><br><span class="line">      colorB: &#39;black&#39;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    let natureColors &#x3D; &#123;</span><br><span class="line">      colorC: &#39;green&#39;,</span><br><span class="line">      colorD: &#39;yellow&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    Object.setPrototypeOf(natureColors, simpleColors);</span><br><span class="line">    console.log(Object.keys(natureColors)); &#x2F;&#x2F;[&quot;colorC&quot;, &quot;colorD&quot;]</span><br><span class="line">    console.log(Object.values(natureColors)); &#x2F;&#x2F;[&quot;green&quot;, &quot;yellow&quot;]</span><br><span class="line">    console.log(Object.entries(natureColors)); &#x2F;&#x2F;[Array(2), Array(2)]</span><br></pre></td></tr></table></figure>
+
+<p>现在注意与<code>for...in</code>语句的区别，<code>for...in</code>不仅可以循环枚举自身属性还可以枚举原型链中的属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let simpleColors &#x3D; &#123;</span><br><span class="line">      colorA: &#39;white&#39;,</span><br><span class="line">      colorB: &#39;black&#39;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    let natureColors &#x3D; &#123;</span><br><span class="line">      colorC: &#39;green&#39;,</span><br><span class="line">      colorD: &#39;yellow&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    Object.setPrototypeOf(natureColors, simpleColors);</span><br><span class="line"></span><br><span class="line">    let enumerableKeys &#x3D; [];</span><br><span class="line">    for(let key in natureColors) &#123;</span><br><span class="line">      enumerableKeys.push(key);</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(enumerableKeys); &#x2F;&#x2F; [&quot;colorC&quot;, &quot;colorD&quot;, &quot;colorA&quot;, &quot;colorB&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><code>enumerableKeys</code>数组包含<code>natureColors</code>自身属性键：<code>colorC</code>、<code>colorD</code>。</p>
+<p>另外<code>for...in</code>也遍历了从<code>simpleColors</code>原型对象继承的属性</p>
+<h4 id="2-Object-values-返回属性值"><a href="#2-Object-values-返回属性值" class="headerlink" title="2. Object.values()返回属性值"></a>2. <code>Object.values()</code>返回属性值</h4><blockquote>
+<p><code>Object.values()</code>方法返回一个给定对象自身的所有可枚举属性值的数组，值顺序与使用<code>foe..in</code>循环的循序相同（区别在于<code>for...in</code>循环枚举原型链中的属性）。</p>
+</blockquote>
+<p>使用<code>Object.keys()</code>收集keys，然后通过key去对象取对应的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let meals &#x3D; &#123;</span><br><span class="line">      mealA: &#39;Breakfast&#39;,</span><br><span class="line">      mealB: &#39;Lunch&#39;,</span><br><span class="line">      mealC: &#39;Dinner&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    for(let key of Object.keys(meals)) &#123;</span><br><span class="line">      let mealName &#x3D; meals[key];</span><br><span class="line">      console.log(mealName);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>meal</code>是一个普通对象。使用<code>Object.keys(meals)</code>和枚举的<code>for...of</code>循环获取对象键值。但是<code>let mealName = meals[key];</code>没有多大的必要，可以进一步优化代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let meals &#x3D; &#123;</span><br><span class="line">      mealA: &#39;Breakfast&#39;,</span><br><span class="line">      mealB: &#39;Lunch&#39;,</span><br><span class="line">      mealC: &#39;Dinner&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    for(let mealName of Object.values(meals)) &#123;</span><br><span class="line">      console.log(mealName);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为<code>Object.values(meals)</code>返回数组中的对象属性值，所以可以直接在 <code>for..of</code>中简化。<code>mealName</code>直接在循环中赋值。</p>
+<h4 id="3-Object-entries"><a href="#3-Object-entries" class="headerlink" title="3.Object.entries()"></a>3.<code>Object.entries()</code></h4><blockquote>
+<p><code>Object.entries()</code>方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用 <code>for...in</code>循环遍历该对象时返回的顺序一致（区别在于 <code>for...in</code>循环也枚举原型链中的属性）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object.entries()&#96; 返回键值对数组，如 &#96;[[key1,value1],[key2,value2],...,[keyN,valueN]]</span><br></pre></td></tr></table></figure>
+
+<h5 id="可能直接使用这些键值对不怎么方便，但可以通过数组解构赋值方式访问键和值就变得非常容易，如下所示："><a href="#可能直接使用这些键值对不怎么方便，但可以通过数组解构赋值方式访问键和值就变得非常容易，如下所示：" class="headerlink" title="可能直接使用这些键值对不怎么方便，但可以通过数组解构赋值方式访问键和值就变得非常容易，如下所示："></a>可能直接使用这些键值对不怎么方便，但可以通过数组解构赋值方式访问键和值就变得非常容易，如下所示：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let meals &#x3D; &#123;</span><br><span class="line">      mealA: &#39;Breakfast&#39;,</span><br><span class="line">      mealB: &#39;Lunch&#39;,</span><br><span class="line">      mealC: &#39;Dinner&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    for (let [key, value] of Object.entries(meals)) &#123;</span><br><span class="line">      console.log(key + &#39;:&#39; + value);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; &#39;mealA:Breakfast&#39; &#39;mealB:Lunch&#39; &#39;mealC:Dinner&#39;</span><br></pre></td></tr></table></figure>
+
+<p>如上所示，因为 <code>Object.entries()</code>返回一个与数组解构赋值兼容的集合，因此不需要为赋值或声明添加额外的行</p>
+<h5 id="当普通对象要转换成-Map-时Object-entries-就很有用，因为-Object-entries-返回的格式与-Map构造函数接受的格式完全相同：-key-value-。"><a href="#当普通对象要转换成-Map-时Object-entries-就很有用，因为-Object-entries-返回的格式与-Map构造函数接受的格式完全相同：-key-value-。" class="headerlink" title="当普通对象要转换成 Map 时Object.entries()就很有用，因为 Object.entries()返回的格式与 Map构造函数接受的格式完全相同：(key,value)。"></a>当普通对象要转换成 <code>Map</code> 时<code>Object.entries()</code>就很有用，因为 <code>Object.entries()</code>返回的格式与 <code>Map</code>构造函数接受的格式完全相同：<code>(key,value)</code>。</h5><p>使用常规的 Map构造函数可以将一个二维键值对数组转换成一个 Map对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let greetings &#x3D; &#123;</span><br><span class="line">      morning: &#39;Good morning&#39;,</span><br><span class="line">      midday: &#39;Good day&#39;,</span><br><span class="line">      evening: &#39;Good evening&#39;</span><br><span class="line">    &#125;;</span><br><span class="line">    let greetingsMap &#x3D; new Map(Object.entries(greetings));</span><br><span class="line">    console.log(greetingsMap); &#x2F;&#x2F; &#123;&quot;morning&quot; &#x3D;&gt; &quot;Good morning&quot;, &quot;midday&quot; &#x3D;&gt; &quot;Good day&quot;, &quot;evening&quot; &#x3D;&gt; &quot;Good evening&quot;&#125;</span><br><span class="line">    console.log([...greetingsMap]); &#x2F;&#x2F; &#x3D;&gt; Object.entries(greetings)</span><br><span class="line">    console.log(greetingsMap.get(&#39;morning&#39;)); &#x2F;&#x2F; Good morning</span><br><span class="line">    console.log(greetingsMap.get(&#39;midday&#39;)); &#x2F;&#x2F; Good day</span><br><span class="line">    console.log(greetingsMap.get(&#39;evening&#39;)); &#x2F;&#x2F; Good evening</span><br></pre></td></tr></table></figure>
+
+<p><code>Map</code> 对象保存键值对。任何值(对象或者原始值) 都可以作为一个键或一个值</p>
+<p>有趣的是， Map提供了与 <code>Object.values()</code>和 <code>Object.entries()</code> 等效的方法（只是它们返回<code>Iterators</code>），以便为 <code>Map</code>实例提取属性值或键值对：</p>
+<ul>
+<li><code>Map.prototype.values()</code> 等价于 <code>Object.values()</code></li>
+<li><code>Map.prototype.entries()</code> 等价于 <code>Object.entries()</code></li>
+</ul>
+<p><code>map</code>是普通对象的改进版本，可以获取 <code>map</code> 的大小(对于普通对象，必须手动获取)，并使用任意对象类型作为键(普通对象使用字符串基元类型作为键)。</p>
+<h5 id="让我们看看返回-values（）和-entries（）的-map的方法"><a href="#让我们看看返回-values（）和-entries（）的-map的方法" class="headerlink" title="让我们看看返回 .values（）和 .entries（）的 map的方法:"></a>让我们看看返回 .values（）和 .entries（）的 map的方法:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[...greetingsMap.values()];</span><br><span class="line">&#x2F;&#x2F; &#x3D;&gt; [&#39;Good morning&#39;, &#39;Good day&#39;, &#39;Good evening&#39;]</span><br><span class="line">[...greetingsMap.entries()];</span><br><span class="line">&#x2F;&#x2F; &#x3D;&gt; [ [&#39;morning&#39;, &#39;Good morning&#39;], [&#39;midday&#39;, &#39;Good day&#39;],</span><br><span class="line">&#x2F;&#x2F;      [&#39;evening&#39;, &#39;Good evening&#39;] ]</span><br></pre></td></tr></table></figure>
+
+<p>注意： <strong>greetingsMap.values()和 greetingsMap.entries()返回迭代器对象。若要将结果放入数组，扩展运算符 …是必要的</strong></p>
+<h4 id="4-对象属性的顺序"><a href="#4-对象属性的顺序" class="headerlink" title="4. 对象属性的顺序"></a>4. 对象属性的顺序</h4><p><code>JS</code>对象是简单的键值映射，因此，对象中属性的顺序是微不足道的， 在大多数情况下，不应该依赖它。</p>
+<p>在<code>ES5</code>和早期标准中，根本没有指定属性的顺序。</p>
+<p>然而，从<code>ES6</code>开始，属性的顺序是基于一个特殊的规则的，除非特指按照时间排序。通过两个新方法 <code>Object.getOwnPropertyNames</code>和 <code>Reflect.ownKeys</code>来编写示例讲解这一属性排序规则。</p>
+<ol>
+<li>数字：当属性的类型时数字类型时，会按照数字的从大到小的顺序进行排序；</li>
+<li>字符串：当属性的类型是字符串时，会按照时间的先后顺序进行排序；</li>
+<li><code>Symbol</code>：当属性的类型是<code>Symbol</code>时，会按照时间的先后顺序进行排序。</li>
+</ol>
+<p>如果需要有序集合，建议将数据存储到数组或 <code>Set</code>中</p>
+<p><strong>总结</strong></p>
+<p><code>Object.values()</code> 和 <code>Object.entries()</code> 是为<code>JS</code>开发人员提供新的标准化辅助函数的另一个改进步骤。</p>
+<p><code>Object.entries()</code>最适用于数组解构赋值，其方式是将键和值轻松分配给不同的变量。此函数还可以轻松地将纯<code>JS对象</code>属性映射到 Map对象中</p>
+<p>注意：<strong>Object.values()和Object.entries()返回数据的顺序是不确定的，所以不要依赖该方式。</strong></p>
+<h4 id="5-补充"><a href="#5-补充" class="headerlink" title="5. 补充"></a>5. 补充</h4><h5 id="JS对象的可枚举属性和不可枚举属性"><a href="#JS对象的可枚举属性和不可枚举属性" class="headerlink" title="JS对象的可枚举属性和不可枚举属性"></a><code>JS</code>对象的可枚举属性和不可枚举属性</h5><blockquote>
+<p>对象的每一个属性都有一个描述对象，用来描述和控制该属性的行为，用<code>Object.getOwnPropertyDescriptor</code>方法来获取该描述对象（用<code>Object.defineProperty</code>方法来设置）。</p>
+</blockquote>
+<p>描述对象的<code>enumerable</code>属性，称为”可枚举性“，如果该属性为<code>false</code>，就表示某些操作会忽略当前属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let obj &#x3D; &#123; start: &#39;123&#39; &#125;;</span><br><span class="line">    console.log(Object.getOwnPropertyDescriptor(obj, &#39;start&#39;))</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F; 输出内容：</span><br><span class="line">     configurable: true</span><br><span class="line">     enumerable: true</span><br><span class="line">     value: &quot;123&quot;</span><br><span class="line">     writable: true</span><br></pre></td></tr></table></figure>
+
+<h5 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h5><ol>
+<li><code>configurable</code>：表示能否通过<code>delete</code>删除此属性，能否修改属性的特性，或能否修改把属性修改为访问器属性，如果直接使用字面量定义对象，默认值为true</li>
+<li><code>enumerable</code>: 表示该属性是否可枚举，即是否通过for-in循环或<code>Object.keys()</code>返回属性，如果直接使用字面量定义对象，默认值为true</li>
+<li><code>writable</code>: 能否修改属性的值，如果直接使用字面量定义对象，默认值为true</li>
+<li><code>value</code>: 该属性对应的值，默认为undefined</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let obj &#x3D; &#123;&#125;;</span><br><span class="line">    Object.defineProperties(obj, &#123;</span><br><span class="line">        name: &#123;</span><br><span class="line">            value: &#39;祖宗&#39;,</span><br><span class="line">            enumerable: false,  &#x2F;&#x2F;不可枚举</span><br><span class="line">        &#125;,</span><br><span class="line">        age: &#123;</span><br><span class="line">            value: 88,</span><br><span class="line">            enumerable: true,   &#x2F;&#x2F;可枚举</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    for (let key in obj) &#123;</span><br><span class="line">        console.log(&quot;key:&quot; + key + &#39;,&#39; + &#39;value:&#39; + obj[key]) &#x2F;&#x2F;key: value, value: 88</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="目前-有四个操作会忽略enumerable为false的属性。"><a href="#目前-有四个操作会忽略enumerable为false的属性。" class="headerlink" title="目前,有四个操作会忽略enumerable为false的属性。"></a>目前,有四个操作会忽略<code>enumerable</code>为<code>false</code>的属性。</h5><ol>
+<li><code>for…in循环</code>：只遍历对象自身的和继承的可枚举的属性</li>
+<li><code>Object.keys()</code>：返回对象自身的所有可枚举的属性的键名</li>
+<li><code>JSON.stringify()</code>：只串行化对象自身的可枚举的属性</li>
+<li><code>Object.assign()</code>： 忽略enumerable为false的属性，只拷贝对象自身的可枚举的属性</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Su Qingqing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://qingqingsu.github.io/2021/01/13/ES6%E2%80%94%E2%80%94%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">https://qingqingsu.github.io/2021/01/13/ES6%E2%80%94%E2%80%94%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/24/react-hook%E5%AE%9E%E7%8E%B0redux%E7%9A%84%E5%8A%9F%E8%83%BD/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">react hook实现redux的功能</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/10/ES6%E2%80%94%E2%80%94class%E8%AF%AD%E6%B3%95%E7%B3%96/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">ES6——class语法糖</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Su Qingqing</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">JavaScript遍历对象的几种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%87%AA%E8%BA%AB%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">1. 自身可枚举属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A5%E7%9C%8B%E7%9C%8B%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%8B%A5%E6%9C%89%E8%87%AA%E8%BA%AB%E5%92%8C%E7%BB%A7%E6%89%BF%E5%B1%9E%E6%80%A7%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%8CObject-keys-%E5%8F%AA%E8%BF%94%E5%9B%9E%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B1%9E%E6%80%A7%E9%94%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">来看看一个对象拥有自身和继承属性的例子，Object.keys()只返回自己的属性键</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Object-values-%E8%BF%94%E5%9B%9E%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="toc-number">1.2.</span> <span class="toc-text">2. Object.values()返回属性值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Object-entries"><span class="toc-number">1.3.</span> <span class="toc-text">3.Object.entries()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E8%BF%99%E4%BA%9B%E9%94%AE%E5%80%BC%E5%AF%B9%E4%B8%8D%E6%80%8E%E4%B9%88%E6%96%B9%E4%BE%BF%EF%BC%8C%E4%BD%86%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%95%B0%E7%BB%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AE%BF%E9%97%AE%E9%94%AE%E5%92%8C%E5%80%BC%E5%B0%B1%E5%8F%98%E5%BE%97%E9%9D%9E%E5%B8%B8%E5%AE%B9%E6%98%93%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">可能直接使用这些键值对不怎么方便，但可以通过数组解构赋值方式访问键和值就变得非常容易，如下所示：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BD%93%E6%99%AE%E9%80%9A%E5%AF%B9%E8%B1%A1%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%88%90-Map-%E6%97%B6Object-entries-%E5%B0%B1%E5%BE%88%E6%9C%89%E7%94%A8%EF%BC%8C%E5%9B%A0%E4%B8%BA-Object-entries-%E8%BF%94%E5%9B%9E%E7%9A%84%E6%A0%BC%E5%BC%8F%E4%B8%8E-Map%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%97%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%AE%8C%E5%85%A8%E7%9B%B8%E5%90%8C%EF%BC%9A-key-value-%E3%80%82"><span class="toc-number">1.3.2.</span> <span class="toc-text">当普通对象要转换成 Map 时Object.entries()就很有用，因为 Object.entries()返回的格式与 Map构造函数接受的格式完全相同：(key,value)。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E7%9C%8B%E7%9C%8B%E8%BF%94%E5%9B%9E-values%EF%BC%88%EF%BC%89%E5%92%8C-entries%EF%BC%88%EF%BC%89%E7%9A%84-map%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">让我们看看返回 .values（）和 .entries（）的 map的方法:</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.4.</span> <span class="toc-text">4. 对象属性的顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%A1%A5%E5%85%85"><span class="toc-number">1.5.</span> <span class="toc-text">5. 补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JS%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="toc-number">1.5.1.</span> <span class="toc-text">JS对象的可枚举属性和不可枚举属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="toc-number">1.5.2.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E5%89%8D-%E6%9C%89%E5%9B%9B%E4%B8%AA%E6%93%8D%E4%BD%9C%E4%BC%9A%E5%BF%BD%E7%95%A5enumerable%E4%B8%BAfalse%E7%9A%84%E5%B1%9E%E6%80%A7%E3%80%82"><span class="toc-number">1.5.3.</span> <span class="toc-text">目前,有四个操作会忽略enumerable为false的属性。</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/18/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Uniapp实现多端开发"/></a><div class="content"><a class="title" href="/2021/03/18/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发">Uniapp实现多端开发</a><time datetime="2021-03-18T06:04:52.000Z" title="Created 2021-03-18 14:04:52">2021-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅谈TypeScript"/></a><div class="content"><a class="title" href="/2021/03/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript">浅谈TypeScript</a><time datetime="2021-03-15T03:12:21.000Z" title="Created 2021-03-15 11:12:21">2021-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/12/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="js三大家族"/></a><div class="content"><a class="title" href="/2021/03/12/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族">js三大家族</a><time datetime="2021-03-12T02:36:26.000Z" title="Created 2021-03-12 10:36:26">2021-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS 中的闭包与模块"/></a><div class="content"><a class="title" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块">JS 中的闭包与模块</a><time datetime="2021-03-11T15:40:29.326Z" title="Created 2021-03-11 23:40:29">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/ES6%E8%AF%AD%E6%B3%95/" title="ES6语法"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ES6语法"/></a><div class="content"><a class="title" href="/2021/03/11/ES6%E8%AF%AD%E6%B3%95/" title="ES6语法">ES6语法</a><time datetime="2021-03-11T12:37:42.000Z" title="Created 2021-03-11 20:37:42">2021-03-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Su Qingqing</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
