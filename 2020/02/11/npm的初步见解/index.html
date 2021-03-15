@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>npm的初步见解 | Su Qingqing</title><meta name="author" content="Su Qingqing"><meta name="copyright" content="Su Qingqing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="npm的初步见解一. 包管理工具1.1. 认识npm我们已经学习了在JavaScript中可以通过模块化的方式将代码划分成一个个小的结构：  在以后的开发中我们就可以通过模块化的方式来封装自己的代码，并且封装成一个工具； 这个工具我们可以让同事通过导入的方式来使用，甚至你可以分享给世界各地的程序员来使用；  如果我们分享给世界上所有的程序员使用，有哪些方式呢？ 方式一：上传到GitHub上、其他程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="npm的初步见解">
+<meta property="og:url" content="https://qingqingsu.github.io/2020/02/11/npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Su Qingqing">
+<meta property="og:description" content="npm的初步见解一. 包管理工具1.1. 认识npm我们已经学习了在JavaScript中可以通过模块化的方式将代码划分成一个个小的结构：  在以后的开发中我们就可以通过模块化的方式来封装自己的代码，并且封装成一个工具； 这个工具我们可以让同事通过导入的方式来使用，甚至你可以分享给世界各地的程序员来使用；  如果我们分享给世界上所有的程序员使用，有哪些方式呢？ 方式一：上传到GitHub上、其他程">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-02-11T00:24:41.000Z">
+<meta property="article:modified_time" content="2021-03-11T11:31:50.377Z">
+<meta property="article:author" content="Su Qingqing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://qingqingsu.github.io/2020/02/11/npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-11 19:31:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Su Qingqing</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">npm的初步见解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-02-11T00:24:41.000Z" title="Created 2020-02-11 08:24:41">2020-02-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-11T11:31:50.377Z" title="Updated 2021-03-11 19:31:50">2021-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="npm的初步见解"><a href="#npm的初步见解" class="headerlink" title="npm的初步见解"></a>npm的初步见解</h2><h2 id="一-包管理工具"><a href="#一-包管理工具" class="headerlink" title="一. 包管理工具"></a>一. 包管理工具</h2><h3 id="1-1-认识npm"><a href="#1-1-认识npm" class="headerlink" title="1.1. 认识npm"></a>1.1. 认识npm</h3><p>我们已经学习了在JavaScript中可以通过模块化的方式将代码划分成一个个小的结构：</p>
+<ul>
+<li>在以后的开发中我们就可以通过模块化的方式来封装自己的代码，并且封装成一个工具；</li>
+<li>这个工具我们可以让同事通过导入的方式来使用，甚至你可以分享给世界各地的程序员来使用；</li>
+</ul>
+<p><strong>如果我们分享给世界上所有的程序员使用，有哪些方式呢？</strong></p>
+<p>方式一：上传到GitHub上、其他程序员通过GitHub下载我们的代码手动的引用；</p>
+<ul>
+<li>缺点是大家必须知道你的代码GitHub的地址，并且从GitHub上手动下载；</li>
+<li>需要在自己的项目中手动的引用，并且管理相关的依赖；</li>
+<li>不需要使用的时候，需要手动来删除相关的依赖；</li>
+<li>当遇到版本升级或者切换时，需要重复上面的操作；</li>
+</ul>
+<p>显然，上面的方式是有效的，但是这种传统的方式非常麻烦，并且容易出错；</p>
+<p>方式二：使用一个专业的工具来管理我们的代码</p>
+<ul>
+<li>我们通过工具将代码发布到特定的位置；</li>
+<li>其他程序员直接通过工具来安装、升级、删除我们的工具代码；</li>
+</ul>
+<p>显然，通过第二种方式我们可以更好的管理自己的工具包，其他人也可以更好的使用我们的工具包。</p>
+<p>包管理工具npm：</p>
+<ul>
+<li>Node Package Manager，也就是Node包管理器；</li>
+<li>但是目前已经不仅仅是Node包管理器了，在前端项目中我们也在使用它来管理依赖的包；</li>
+<li>比如express、koa、react、react-dom、axios、babel、webpack等等；</li>
+</ul>
+<p>npm管理的包可以在哪里查看、搜索呢？</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/">https://www.npmjs.com/</a></li>
+<li>这是我们安装相关的npm包的官网；</li>
+</ul>
+<p>npm管理的包存放在哪里呢？</p>
+<ul>
+<li>我们发布自己的包其实是发布到registry上面的；</li>
+<li>当我们安装一个包时其实是从registry上面下载的包；</li>
+</ul>
+<h3 id="1-2-项目配置文件"><a href="#1-2-项目配置文件" class="headerlink" title="1.2. 项目配置文件"></a>1.2. 项目配置文件</h3><p>事实上，我们每一个项目都会有一个对应的配置文件，无论是前端项目还是后端项目：</p>
+<ul>
+<li>这个配置文件会记录着你项目的名称、版本号、项目描述等；</li>
+<li>也会记录着你项目所依赖的其他库的信息和依赖库的版本号；</li>
+</ul>
+<p>这个配置文件在Node环境下面（无论是前端还是后端）就是package.json。</p>
+<p>我们以vue cli4脚手架创建的项目为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;my-vue&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.1.0&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;serve&quot;: &quot;vue-cli-service serve&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;vue-cli-service build&quot;,</span><br><span class="line">    &quot;lint&quot;: &quot;vue-cli-service lint&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;core-js&quot;: &quot;^3.6.5&quot;,</span><br><span class="line">    &quot;vue&quot;: &quot;^2.6.11&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-babel&quot;: &quot;~4.5.0&quot;,</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-eslint&quot;: &quot;~4.5.0&quot;,</span><br><span class="line">    &quot;@vue&#x2F;cli-service&quot;: &quot;~4.5.0&quot;,</span><br><span class="line">    &quot;babel-eslint&quot;: &quot;^10.1.0&quot;,</span><br><span class="line">    &quot;eslint&quot;: &quot;^6.7.2&quot;,</span><br><span class="line">    &quot;eslint-plugin-vue&quot;: &quot;^6.2.2&quot;,</span><br><span class="line">    &quot;vue-template-compiler&quot;: &quot;^2.6.11&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;browserslist&quot;: [</span><br><span class="line">    &quot;&gt; 1%&quot;,</span><br><span class="line">    &quot;last 2 versions&quot;,</span><br><span class="line">    &quot;not dead&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>事实上Vue ClI4脚手架创建的项目相对进行了简化，我们来看一下CLI2创建的项目：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;vuerouterbasic&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;A Vue.js project&quot;,</span><br><span class="line">  &quot;author&quot;: &quot;&#39;coderwhy&#39; &lt;&#39;coderwhy@gmail.com&#39;&gt;&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;webpack-dev-server --inline --progress --config build&#x2F;webpack.dev.conf.js&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;npm run dev&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;node build&#x2F;build.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;vue&quot;: &quot;^2.5.2&quot;,</span><br><span class="line">    &quot;vue-router&quot;: &quot;^3.0.1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;autoprefixer&quot;: &quot;^7.1.2&quot;,</span><br><span class="line">    &quot;babel-core&quot;: &quot;^6.22.1&quot;,</span><br><span class="line">    &quot;babel-helper-vue-jsx-merge-props&quot;: &quot;^2.0.3&quot;,</span><br><span class="line">    &quot;babel-loader&quot;: &quot;^7.1.1&quot;,</span><br><span class="line">    &quot;babel-plugin-syntax-jsx&quot;: &quot;^6.18.0&quot;,</span><br><span class="line">    &quot;babel-plugin-transform-runtime&quot;: &quot;^6.22.0&quot;,</span><br><span class="line">    &quot;babel-plugin-transform-vue-jsx&quot;: &quot;^3.5.0&quot;,</span><br><span class="line">    &quot;babel-preset-env&quot;: &quot;^1.3.2&quot;,</span><br><span class="line">    &quot;babel-preset-stage-2&quot;: &quot;^6.22.0&quot;,</span><br><span class="line">    &quot;chalk&quot;: &quot;^2.0.1&quot;,</span><br><span class="line">    &quot;copy-webpack-plugin&quot;: &quot;^4.0.1&quot;,</span><br><span class="line">    &quot;css-loader&quot;: &quot;^0.28.0&quot;,</span><br><span class="line">    &quot;extract-text-webpack-plugin&quot;: &quot;^3.0.0&quot;,</span><br><span class="line">    &quot;file-loader&quot;: &quot;^1.1.4&quot;,</span><br><span class="line">    &quot;friendly-errors-webpack-plugin&quot;: &quot;^1.6.1&quot;,</span><br><span class="line">    &quot;html-webpack-plugin&quot;: &quot;^2.30.1&quot;,</span><br><span class="line">    &quot;node-notifier&quot;: &quot;^5.1.2&quot;,</span><br><span class="line">    &quot;optimize-css-assets-webpack-plugin&quot;: &quot;^3.2.0&quot;,</span><br><span class="line">    &quot;ora&quot;: &quot;^1.2.0&quot;,</span><br><span class="line">    &quot;portfinder&quot;: &quot;^1.0.13&quot;,</span><br><span class="line">    &quot;postcss-import&quot;: &quot;^11.0.0&quot;,</span><br><span class="line">    &quot;postcss-loader&quot;: &quot;^2.0.8&quot;,</span><br><span class="line">    &quot;postcss-url&quot;: &quot;^7.2.1&quot;,</span><br><span class="line">    &quot;rimraf&quot;: &quot;^2.6.0&quot;,</span><br><span class="line">    &quot;semver&quot;: &quot;^5.3.0&quot;,</span><br><span class="line">    &quot;shelljs&quot;: &quot;^0.7.6&quot;,</span><br><span class="line">    &quot;uglifyjs-webpack-plugin&quot;: &quot;^1.1.1&quot;,</span><br><span class="line">    &quot;url-loader&quot;: &quot;^0.5.8&quot;,</span><br><span class="line">    &quot;vue-loader&quot;: &quot;^13.3.0&quot;,</span><br><span class="line">    &quot;vue-style-loader&quot;: &quot;^3.0.1&quot;,</span><br><span class="line">    &quot;vue-template-compiler&quot;: &quot;^2.5.2&quot;,</span><br><span class="line">    &quot;webpack&quot;: &quot;^3.6.0&quot;,</span><br><span class="line">    &quot;webpack-bundle-analyzer&quot;: &quot;^2.9.0&quot;,</span><br><span class="line">    &quot;webpack-dev-server&quot;: &quot;^2.9.1&quot;,</span><br><span class="line">    &quot;webpack-merge&quot;: &quot;^4.1.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;engines&quot;: &#123;</span><br><span class="line">    &quot;node&quot;: &quot;&gt;&#x3D; 6.0.0&quot;,</span><br><span class="line">    &quot;npm&quot;: &quot;&gt;&#x3D; 3.0.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;browserslist&quot;: [</span><br><span class="line">    &quot;&gt; 1%&quot;,</span><br><span class="line">    &quot;last 2 versions&quot;,</span><br><span class="line">    &quot;not ie &lt;&#x3D; 8&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们也可以手动创建一个package.json文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm init #创建时填写信息</span><br><span class="line">npm init -y # 所有信息使用默认的</span><br></pre></td></tr></table></figure>
+
+<p><code>npm init -y</code>生成文件的效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;learn-npm&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;main.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们会发现属性非常的多，我们这里对一些常见属性进行一些解析。</p>
+<p><strong>必须填写的属性：name、version</strong></p>
+<ul>
+<li>name是项目的名称；</li>
+<li>version是当前项目的版本号；</li>
+<li>description是描述信息，很多时候是作为项目的基本描述；</li>
+<li>author是作者相关信息（发布时用到）；</li>
+<li>license是开源协议（发布时用到）；</li>
+</ul>
+<p><strong>private属性：</strong></p>
+<ul>
+<li>private属性记录当前的项目是否是私有的；</li>
+<li>当值为true时，npm是不能发布它的，这是防止私有项目或模块发布出去的方式；</li>
+</ul>
+<p><strong>main属性：</strong></p>
+<ul>
+<li>设置程序的入口。</li>
+<li>很多人会有疑惑，webpack不是会自动找到程序的入口吗？</li>
+<li><ul>
+<li>这个入口和webpack打包的入口并不冲突；</li>
+<li>它是在你发布一个模块的时候会用到的；</li>
+<li>比如我们使用axios模块 <code>const axios = require(&#39;axios&#39;);</code></li>
+<li>实际上是找到对应的main属性查找文件的；</li>
+</ul>
+</li>
+</ul>
+<p><strong>scripts属性</strong></p>
+<ul>
+<li>scripts属性用于配置一些脚本命令，以键值对的形式存在；</li>
+<li>配置后我们可以通过 <code>npm run 命令的key</code>来执行这个命令；</li>
+<li><code>npm start</code>和<code>npm run start</code>的区别是什么？</li>
+<li><ul>
+<li>它们是等价的；</li>
+<li>对于常用的 start、 test、stop、restart可以省略掉run直接通过 <code>npm start</code>等方式运行；</li>
+</ul>
+</li>
+</ul>
+<p><strong>dependencies属性</strong></p>
+<ul>
+<li>dependencies属性是指定无论开发环境还是生成环境都需要依赖的包；</li>
+<li>通常是我们项目实际开发用到的一些库模块；</li>
+<li>与之对应的是devDependencies；</li>
+</ul>
+<p><strong>devDependencies属性</strong></p>
+<ul>
+<li>一些包在生成环境是不需要的，比如webpack、babel等；</li>
+<li>这个时候我们会通过 <code>npm install webpack --save-dev</code>，将它安装到devDependencies属性中；</li>
+</ul>
+<p>疑问：那么在生成环境如何保证不安装这些包呢？</p>
+<ul>
+<li>生成环境不需要安装时，我们需要通过 <code>npm install --production</code> 来安装文件的依赖；</li>
+</ul>
+<p><strong>版本管理的问题</strong></p>
+<p>我们会发现安装的依赖版本出现：<code>^2.0.3</code>或<code>~2.0.3</code>，这是什么意思呢？</p>
+<p>npm的包通常需要遵从semver版本规范：</p>
+<ul>
+<li>semver：<a target="_blank" rel="noopener" href="https://semver.org/lang/zh-CN/">https://semver.org/lang/zh-CN/</a></li>
+<li>npm semver：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/misc/semver">https://docs.npmjs.com/misc/semver</a></li>
+</ul>
+<p>semver版本规范是X.Y.Z：</p>
+<ul>
+<li>X主版本号（major）：当你做了不兼容的 API 修改（可能不兼容之前的版本）；</li>
+<li>Y次版本号（minor）：当你做了向下兼容的功能性新增（新功能增加，但是兼容之前的版本）；</li>
+<li>Z修订号（patch）：当你做了向下兼容的问题修正（没有新功能，修复了之前版本的bug）；</li>
+</ul>
+<p>我们这里解释一下 ^和~的区别：</p>
+<ul>
+<li><code>^x.y.z</code>：表示x是保持不变的，y和z永远安装最新的版本；</li>
+<li><code>~x.y.z</code>：表示x和y保持不变的，z永远安装最新的版本；</li>
+</ul>
+<p><strong>engines属性</strong></p>
+<ul>
+<li>engines属性用于指定Node和NPM的版本号；</li>
+<li>在安装的过程中，会先检查对应的引擎版本，如果不符合就会报错；</li>
+<li>事实上也可以指定所在的操作系统 <code>&quot;os&quot; : [ &quot;darwin&quot;, &quot;linux&quot; ]</code>，只是很少用到；</li>
+</ul>
+<p><strong>browserslist属性</strong></p>
+<ul>
+<li>用于配置打包后的JavaScript浏览器的兼容情况，参考；</li>
+<li>否则我们需要手动的添加polyfills来让支持某些语法；</li>
+<li>也就是说它是为webpack等打包工具服务的一个属性（这里不是详细讲解webpack等工具的工作原理，所以不再给出详情）；</li>
+</ul>
+<h2 id="二-npm工具解析"><a href="#二-npm工具解析" class="headerlink" title="二. npm工具解析"></a>二. npm工具解析</h2><h3 id="2-1-npm-install命令"><a href="#2-1-npm-install命令" class="headerlink" title="2.1. npm install命令"></a>2.1. npm install命令</h3><p>安装npm包分两种情况：</p>
+<ul>
+<li>全局安装（global install）：<code>npm install yarn -g</code>;</li>
+<li>项目（局部）安装（local install）：<code>npm install</code></li>
+</ul>
+<p><strong>全局安装</strong></p>
+<p>全局安装是直接将某个包安装到全局：</p>
+<p>比如yarn的全局安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm install yarn -g</span><br></pre></td></tr></table></figure>
+
+<p>但是很多人对全局安装有一些误会：</p>
+<ul>
+<li>通常使用npm全局安装的包都是一些工具包：yarn、webpack等；</li>
+<li>并不是类似于 axios、express、koa等库文件；</li>
+<li>所以全局安装了之后并不能让我们在所有的项目中使用 axios等库；</li>
+</ul>
+<p><strong>项目安装</strong></p>
+<p>项目安装会在当前目录下生产一个 <code>node_modules</code> 文件夹，我们之前讲解require查找顺序时有讲解过这个包在什么情况下被查找；</p>
+<p>局部安装分为开发时依赖和生产时依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line"># 安装开发和生产依赖</span><br><span class="line">npm install axios --save</span><br><span class="line">npm install axios -S</span><br><span class="line">npm install axios</span><br><span class="line">npm i axios</span><br><span class="line"></span><br><span class="line"># 开发者</span><br><span class="line">npm install axios --save-dev</span><br><span class="line">npm install axios -D</span><br><span class="line">npm i axios -D</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-npm-install原理"><a href="#2-2-npm-install原理" class="headerlink" title="2.2. npm install原理"></a>2.2. npm install原理</h3><p>很多同学之情应该已经会了 <code>npm install &lt;package&gt;</code>，但是你是否思考过它的内部原理呢？</p>
+<ul>
+<li>执行 <code>npm install</code>它背后帮助我们完成了什么操作？</li>
+<li>我们会发现还有一个成为package-lock.json的文件，它的作用是什么？</li>
+<li>从npm5开始，npm支持缓存策略（来自yarn的压力），缓存有什么作用呢？</li>
+</ul>
+<p>这是一幅我画出的根据 <code>npm install</code> 的原理图：</p>
+<ul>
+<li>npm install会检测是有package-lock.json文件：</li>
+<li><ul>
+<li>检测lock中包的版本是否和package.json中一致（会按照semver版本规范检测）；</li>
+<li>一致的情况下，会去优先查找缓存</li>
+<li>查找到，会获取缓存中的压缩文件，并且将压缩文件解压到node_modules文件夹中；</li>
+<li>不一致，那么会重新构建依赖关系，直接会走顶层的流程；</li>
+<li>没有找到，会从registry仓库下载，直接走顶层流程；</li>
+<li>分析依赖关系，这是因为我们可能包会依赖其他的包，并且多个包之间会产生相同依赖的情况；</li>
+<li>从registry仓库中下载压缩包（如果我们设置了镜像，那么会从镜像服务器下载压缩包）；</li>
+<li>获取到压缩包后会对压缩包进行缓存（从npm5开始有的）；</li>
+<li>将压缩包解压到项目的node_modules文件夹中（前面我们讲过，require的查找顺序会在该包下面查找）</li>
+<li>没有lock文件</li>
+<li>有lock文件</li>
+</ul>
+</li>
+</ul>
+<p>package-lock.json文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;learn-npm&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;lockfileVersion&quot;: 1,</span><br><span class="line">  &quot;requires&quot;: true,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;axios&quot;: &#123;</span><br><span class="line">      &quot;version&quot;: &quot;0.20.0&quot;,</span><br><span class="line">      &quot;resolved&quot;: &quot;https:&#x2F;&#x2F;registry.npmjs.org&#x2F;axios&#x2F;-&#x2F;axios-0.20.0.tgz&quot;,</span><br><span class="line">      &quot;integrity&quot;: &quot;sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M&#x2F;v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA&#x3D;&#x3D;&quot;,</span><br><span class="line">      &quot;requires&quot;: &#123;</span><br><span class="line">        &quot;follow-redirects&quot;: &quot;^1.10.0&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;follow-redirects&quot;: &#123;</span><br><span class="line">      &quot;version&quot;: &quot;1.13.0&quot;,</span><br><span class="line">      &quot;resolved&quot;: &quot;https:&#x2F;&#x2F;registry.npmjs.org&#x2F;follow-redirects&#x2F;-&#x2F;follow-redirects-1.13.0.tgz&quot;,</span><br><span class="line">      &quot;integrity&quot;: &quot;sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd&#x2F;TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA&#x3D;&#x3D;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>package-lock.json文件解析：</p>
+<ul>
+<li>name：项目的名称；</li>
+<li>version：项目的版本；</li>
+<li>lockfileVersion：lock文件的版本；</li>
+<li>requires：使用requires来跟着模块的依赖关系；</li>
+<li>dependencies：项目的依赖</li>
+<li><ul>
+<li>version表示实际安装的axios的版本；</li>
+<li>resolved用来记录下载的地址，registry仓库中的位置；</li>
+<li>requires记录当前模块的依赖；</li>
+<li>integrity用来从缓存中获取索引，再通过索引去获取压缩包文件；</li>
+<li>当前项目依赖axios，但是axios依赖follow-redireacts；</li>
+<li>axios中的属性如下：</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-其他npm命令"><a href="#2-3-其他npm命令" class="headerlink" title="2.3. 其他npm命令"></a>2.3. 其他npm命令</h3><p>我们这里再介绍几个比较常用的：</p>
+<p>卸载某个依赖包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm uninstall package</span><br><span class="line">npm uninstall package --save-dev</span><br><span class="line">npm uninstall package -D</span><br></pre></td></tr></table></figure>
+
+<p>强制重新build</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm rebuild</span><br></pre></td></tr></table></figure>
+
+<p>清除缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm cache clean</span><br></pre></td></tr></table></figure>
+
+<p>npm的命令其实是非常多的：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli-documentation/cli">https://docs.npmjs.com/cli-documentation/cli</a></li>
+<li>更多的命令，可以根据需要查阅官方文档</li>
+</ul>
+<h3 id="2-4-yarn和cnpm"><a href="#2-4-yarn和cnpm" class="headerlink" title="2.4. yarn和cnpm"></a>2.4. yarn和cnpm</h3><p>另一个node包管理工具yarn：</p>
+<ul>
+<li>yarn是由Facebook、Google、Exponent 和 Tilde 联合推出了一个新的 JS 包管理工具；</li>
+<li>yarn 是为了弥补 npm 的一些缺陷而出现的；</li>
+<li>早期的npm存在很多的缺陷，比如安装依赖速度很慢、版本依赖混乱等等一系列的问题；</li>
+<li>虽然从npm5版本开始，进行了很多的升级和改进，但是依然很多人喜欢使用yarn；</li>
+</ul>
+<p><strong>补充：cnpm</strong></p>
+<p>由于一些特殊的原因，某些情况下我们没办法很好的从 <code>https://registry.npmjs.org</code>下载下来一些需要的包。</p>
+<p>查看npm镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm config get registry # npm config get registry</span><br></pre></td></tr></table></figure>
+
+<p>我们可以直接设置npm的镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>但是对于大多数人来说（比如我），并不希望将npm镜像修改了：</p>
+<ul>
+<li>第一，不太希望随意修改npm原本从官方下来包的渠道；</li>
+<li>第二，担心某天淘宝的镜像挂了或者不维护了，又要改来改去；</li>
+</ul>
+<p>这个时候，我们可以使用cnpm，并且将cnpm设置为淘宝的镜像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line">cnpm config get registry # https:&#x2F;&#x2F;r.npm.taobao.org&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><strong>补充：npx</strong></p>
+<p>npx是npm5.2之后自带的一个命令。</p>
+<p>npx的作用非常多，但是比较常见的是使用它来调用项目中的某个模块的指令。</p>
+<p>我们以webpack为例：</p>
+<ul>
+<li>全局安装的是webpack5.1.3</li>
+<li>项目安装的是webpack3.6.0</li>
+</ul>
+<p>如果我在终端执行 <code>webpack --version</code>使用的是哪一个命令呢？</p>
+<ul>
+<li>显示结果会是 <code>webpack 5.1.3</code>，事实上使用的是全局的，为什么呢？</li>
+<li>原因非常简单，在当前目录下找不到webpack时，就会去全局找，并且执行命令；</li>
+</ul>
+<p>那么如何使用项目（局部）的webpack，常见的是两种方式：</p>
+<ul>
+<li>方式一：明确查找到node_module下面的webpack</li>
+<li>方式二：在 <code>scripts</code>定义脚本，来执行webpack；</li>
+</ul>
+<p>方式一：在终端中使用如下命令（在项目根目录下）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">.&#x2F;node_modules&#x2F;.bin&#x2F;webpack --version</span><br></pre></td></tr></table></figure>
+
+<p>方式二：修改package.json中的scripts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br><span class="line">  &quot;webpack&quot;: &quot;webpack --version&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>终端中执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npm run webpack</span><br></pre></td></tr></table></figure>
+
+<p>但是这两种方式都有一点点麻烦，更好的办法是直接使用npx：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">npx webpack --version</span><br></pre></td></tr></table></figure>
+
+<p>npx的原理非常简单，它会到当前目录的node_modules/.bin目录下查找对应的命令；</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Su Qingqing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://qingqingsu.github.io/2020/02/11/npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3/">https://qingqingsu.github.io/2020/02/11/npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/03/11/%E7%AE%80%E8%BF%B0Js%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">简述Js中的原型与原型链</div></div></a></div><div class="next-post pull-right"><a href="/2020/01/30/JavaScript%E2%80%94%E2%80%94%E9%A1%BA%E5%BA%8F%E8%A1%A8%E3%80%81%E9%93%BE%E8%A1%A8/"><img class="next-cover" src="http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">JavaScript——顺序表、链表</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Su Qingqing</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">npm的初步见解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">一. 包管理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%A4%E8%AF%86npm"><span class="toc-number">2.1.</span> <span class="toc-text">1.1. 认识npm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">1.2. 项目配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-npm%E5%B7%A5%E5%85%B7%E8%A7%A3%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">二. npm工具解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-npm-install%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.</span> <span class="toc-text">2.1. npm install命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-npm-install%E5%8E%9F%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">2.2. npm install原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%85%B6%E4%BB%96npm%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.</span> <span class="toc-text">2.3. 其他npm命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-yarn%E5%92%8Ccnpm"><span class="toc-number">3.4.</span> <span class="toc-text">2.4. yarn和cnpm</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Uniapp实现多端开发"/></a><div class="content"><a class="title" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发">Uniapp实现多端开发</a><time datetime="2021-05-05T06:04:52.000Z" title="Created 2021-05-05 14:04:52">2021-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅谈TypeScript"/></a><div class="content"><a class="title" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript">浅谈TypeScript</a><time datetime="2021-04-15T03:12:21.000Z" title="Created 2021-04-15 11:12:21">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="js三大家族"/></a><div class="content"><a class="title" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族">js三大家族</a><time datetime="2021-04-01T02:36:26.000Z" title="Created 2021-04-01 10:36:26">2021-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS 中的闭包与模块"/></a><div class="content"><a class="title" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块">JS 中的闭包与模块</a><time datetime="2021-03-11T15:40:29.326Z" title="Created 2021-03-11 23:40:29">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/cookie-session/" title="cookie session"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cookie session"/></a><div class="content"><a class="title" href="/2021/03/11/cookie-session/" title="cookie session">cookie session</a><time datetime="2021-03-11T14:38:25.000Z" title="Created 2021-03-11 22:38:25">2021-03-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Su Qingqing</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

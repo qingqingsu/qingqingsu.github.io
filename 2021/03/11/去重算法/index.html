@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>去重算法 | Su Qingqing</title><meta name="author" content="Su Qingqing"><meta name="copyright" content="Su Qingqing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.遍历数组法它是最简单的数组去重方法（indexOf方法） 实现思路：新建一个数组，遍历去要重的数组，当值不在新数组的时候（indexOf为-1）就加入该新数组中； 1234567891011Codevar arr&#x3D;[2,8,5,0,5,2,6,7,2];function unique1(arr)&amp;#123;  var hash&#x3D;[];  for (var i &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="去重算法">
+<meta property="og:url" content="https://qingqingsu.github.io/2021/03/11/%E5%8E%BB%E9%87%8D%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Su Qingqing">
+<meta property="og:description" content="1.遍历数组法它是最简单的数组去重方法（indexOf方法） 实现思路：新建一个数组，遍历去要重的数组，当值不在新数组的时候（indexOf为-1）就加入该新数组中； 1234567891011Codevar arr&#x3D;[2,8,5,0,5,2,6,7,2];function unique1(arr)&amp;#123;  var hash&#x3D;[];  for (var i &#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-11T11:34:22.000Z">
+<meta property="article:modified_time" content="2021-03-11T11:35:34.308Z">
+<meta property="article:author" content="Su Qingqing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://qingqingsu.github.io/2021/03/11/%E5%8E%BB%E9%87%8D%E7%AE%97%E6%B3%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-11 19:35:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Su Qingqing</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">去重算法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-11T11:34:22.000Z" title="Created 2021-03-11 19:34:22">2021-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-11T11:35:34.308Z" title="Updated 2021-03-11 19:35:34">2021-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="1-遍历数组法"><a href="#1-遍历数组法" class="headerlink" title="1.遍历数组法"></a><strong>1.遍历数组法</strong></h3><p>它是最简单的数组去重方法（indexOf方法）</p>
+<p>实现思路：新建一个数组，遍历去要重的数组，当值不在新数组的时候（indexOf为-1）就加入该新数组中；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">var arr&#x3D;[2,8,5,0,5,2,6,7,2];</span><br><span class="line">function unique1(arr)&#123;</span><br><span class="line">  var hash&#x3D;[];</span><br><span class="line">  for (var i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">     if(hash.indexOf(arr[i])&#x3D;&#x3D;-1)&#123;</span><br><span class="line">      hash.push(arr[i]);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-数组下标判断法"><a href="#2-数组下标判断法" class="headerlink" title="2.数组下标判断法"></a><strong>2.数组下标判断法</strong></h3><p>调用indexOf方法，性能和方法1差不多</p>
+<p>实现思路：如果当前数组的第 i 项在当前数组中第一次出现的位置不是 i，那么表示第 i 项是重复的，忽略掉。否则存入结果数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">function unique2(arr)&#123;</span><br><span class="line">  var hash&#x3D;[];</span><br><span class="line">  for (var i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">     if(arr.indexOf(arr[i])&#x3D;&#x3D;i)&#123;</span><br><span class="line">      hash.push(arr[i]);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-排序后相邻去除法"><a href="#3-排序后相邻去除法" class="headerlink" title="3.排序后相邻去除法"></a><strong>3.排序后相邻去除法</strong></h3><p>实现思路：给传入的数组排序，排序后相同的值会相邻，然后遍历排序后数组时，新数组只加入不与前一值重复的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">function unique3(arr)&#123;</span><br><span class="line">  arr.sort();</span><br><span class="line">  var hash&#x3D;[arr[0]];</span><br><span class="line">  for (var i &#x3D; 1; i &lt; arr.length; i++) &#123;</span><br><span class="line">     if(arr[i]!&#x3D;hash[hash.length-1])&#123;</span><br><span class="line">      hash.push(arr[i]);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-优化遍历数组法"><a href="#4-优化遍历数组法" class="headerlink" title="4.优化遍历数组法"></a><strong>4.优化遍历数组法</strong></h3><p>实现思路：双层循环，外循环表示从0到arr.length，内循环表示从i+1到arr.length</p>
+<p>将没重复的右边值放入新数组。（检测到有重复值时终止当前循环同时进入外层循环的下一轮判断）</p>
+<p>quan_lst 里面是一个一个的js字面量对象，根据json里面的属性进行判定去重</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">function unique(quan_lst)&#123;    </span><br><span class="line">&#x2F;&#x2F;去掉重复选取的数据</span><br><span class="line">    for (var i &#x3D; 0; i &lt; quan_lst.length; i++) &#123;</span><br><span class="line">        for (var j &#x3D;i+1; j &lt;quan_lst.length; ) &#123;</span><br><span class="line">            if (quan_lst[i].photoid &#x3D;&#x3D; quan_lst[j].photoid ) &#123;&#x2F;&#x2F;通过photoid属性进行匹配；</span><br><span class="line">                quan_lst.splice(j, 1);&#x2F;&#x2F;去除重复的对象；</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-ES6实现"><a href="#5-ES6实现" class="headerlink" title="5.ES6实现"></a><strong>5.ES6实现</strong></h3><p>基本思路：ES6提供了新的数据结构Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。</p>
+<p>Set函数可以接受一个数组（或类似数组的对象）作为参数，用来初始化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">function unique5(arr)&#123;</span><br><span class="line">  var x &#x3D; new Set(arr);</span><br><span class="line"> return [...x];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>扩展：如果重复，则去掉该元素</p>
+<p>数组下标去重</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Code</span><br><span class="line">function unique22(arr)&#123;</span><br><span class="line">  var hash&#x3D;[];</span><br><span class="line">  for (var i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">     if(arr.indexOf(arr[i])&#x3D;&#x3D;arr.lastIndexOf(arr[i]))&#123;</span><br><span class="line">      hash.push(arr[i]);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>补充：原先自己一直以为indexOf是针对字符串，原来indexOf也可以查询出数组元素所在的数组中的位置(以0开始计算),</p>
+<h3 id="6-ES6实现（第二种方式）"><a href="#6-ES6实现（第二种方式）" class="headerlink" title="6.ES6实现（第二种方式）"></a><strong>6.ES6实现</strong>（第二种方式）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D; [1,1,8,8,12,12,15,15,16,16];</span><br><span class="line"></span><br><span class="line">function unique (arr) &#123;</span><br><span class="line">return Array.from(new Set(arr))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(unique(arr))</span><br><span class="line">&#x2F;&#x2F;[1,8,12,15,16]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-利用includes"><a href="#7-利用includes" class="headerlink" title="7.利用includes"></a><strong>7.利用includes</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D; [1, 1, 8, 8, 12, 12, 15, 15, 16, 16];</span><br><span class="line">function unique(arr) &#123;</span><br><span class="line">if (!Array.isArray(arr)) &#123;</span><br><span class="line">console.log(‘type error!’)</span><br><span class="line">return</span><br><span class="line">&#125;</span><br><span class="line">var array &#x3D;[];</span><br><span class="line">for(var i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">if( !array.includes( arr[i]) ) &#123;&#x2F;&#x2F;includes 检测数组是否有某个值</span><br><span class="line">array.push(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return array</span><br><span class="line">&#125;</span><br><span class="line">console.log(unique(arr))</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-利用filter"><a href="#8-利用filter" class="headerlink" title="8.利用filter"></a>8.利用filter</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D; [1, 1, 8, 8, 12, 12, 15, 15, 16, 16];</span><br><span class="line">function unlink(arr) &#123;</span><br><span class="line">return arr.filter(function (item, index, arr) &#123;</span><br><span class="line">&#x2F;&#x2F;当前元素，在原始数组中的第一个索引&#x3D;&#x3D;当前索引值，否则返回当前元素</span><br><span class="line">return arr.indexOf(item, 0) &#x3D;&#x3D;&#x3D; index;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;</span><br><span class="line">console.log(unlink(arr));</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Su Qingqing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://qingqingsu.github.io/2021/03/11/%E5%8E%BB%E9%87%8D%E7%AE%97%E6%B3%95/">https://qingqingsu.github.io/2021/03/11/%E5%8E%BB%E9%87%8D%E7%AE%97%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/11/%E5%85%B3%E4%BA%8E%E6%B5%AE%E5%8A%A8%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">关于浮动的若干问题</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/11/%E6%B7%B1%E6%8B%B7%E8%B4%9D/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">深拷贝</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Su Qingqing</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">1.遍历数组法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E5%88%A4%E6%96%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">2.数组下标判断法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8E%92%E5%BA%8F%E5%90%8E%E7%9B%B8%E9%82%BB%E5%8E%BB%E9%99%A4%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3.排序后相邻去除法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BC%98%E5%8C%96%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">4.优化遍历数组法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ES6%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.</span> <span class="toc-text">5.ES6实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-ES6%E5%AE%9E%E7%8E%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">6.ES6实现（第二种方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%88%A9%E7%94%A8includes"><span class="toc-number">7.</span> <span class="toc-text">7.利用includes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%88%A9%E7%94%A8filter"><span class="toc-number">8.</span> <span class="toc-text">8.利用filter</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Uniapp实现多端开发"/></a><div class="content"><a class="title" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发">Uniapp实现多端开发</a><time datetime="2021-05-05T06:04:52.000Z" title="Created 2021-05-05 14:04:52">2021-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅谈TypeScript"/></a><div class="content"><a class="title" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript">浅谈TypeScript</a><time datetime="2021-04-15T03:12:21.000Z" title="Created 2021-04-15 11:12:21">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="js三大家族"/></a><div class="content"><a class="title" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族">js三大家族</a><time datetime="2021-04-01T02:36:26.000Z" title="Created 2021-04-01 10:36:26">2021-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS 中的闭包与模块"/></a><div class="content"><a class="title" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块">JS 中的闭包与模块</a><time datetime="2021-03-11T15:40:29.326Z" title="Created 2021-03-11 23:40:29">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/cookie-session/" title="cookie session"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cookie session"/></a><div class="content"><a class="title" href="/2021/03/11/cookie-session/" title="cookie session">cookie session</a><time datetime="2021-03-11T14:38:25.000Z" title="Created 2021-03-11 22:38:25">2021-03-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Su Qingqing</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

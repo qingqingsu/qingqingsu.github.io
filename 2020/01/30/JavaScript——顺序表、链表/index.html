@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript——顺序表、链表 | Su Qingqing</title><meta name="author" content="Su Qingqing"><meta name="copyright" content="Su Qingqing"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="顺序表与链表1. 顺序表(数组) 顺序表是在计算机内存中以数组的形式保存的线性表，是指用一组地址连续的存储单元依次存储数据元素的线性结构。线性表采用顺序存储的方式存储就称之为顺序表。顺序表是将表中的结点依次存放在计算机内存中一组地址连续的存储单元中  顺序表的优点：存储的数据是连续的，访问数据可以一次定位，时间复杂度为O(1) 顺序表的缺点：空间必须是连续的，如果要插入新的元素要换内存空间地址，如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript——顺序表、链表">
+<meta property="og:url" content="https://qingqingsu.github.io/2020/01/30/JavaScript%E2%80%94%E2%80%94%E9%A1%BA%E5%BA%8F%E8%A1%A8%E3%80%81%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Su Qingqing">
+<meta property="og:description" content="顺序表与链表1. 顺序表(数组) 顺序表是在计算机内存中以数组的形式保存的线性表，是指用一组地址连续的存储单元依次存储数据元素的线性结构。线性表采用顺序存储的方式存储就称之为顺序表。顺序表是将表中的结点依次存放在计算机内存中一组地址连续的存储单元中  顺序表的优点：存储的数据是连续的，访问数据可以一次定位，时间复杂度为O(1) 顺序表的缺点：空间必须是连续的，如果要插入新的元素要换内存空间地址，如">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg">
+<meta property="article:published_time" content="2020-01-30T13:10:27.000Z">
+<meta property="article:modified_time" content="2021-03-11T10:01:13.560Z">
+<meta property="article:author" content="Su Qingqing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://qingqingsu.github.io/2020/01/30/JavaScript%E2%80%94%E2%80%94%E9%A1%BA%E5%BA%8F%E8%A1%A8%E3%80%81%E9%93%BE%E8%A1%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-11 18:01:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Su Qingqing</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript——顺序表、链表</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-01-30T13:10:27.000Z" title="Created 2020-01-30 21:10:27">2020-01-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-11T10:01:13.560Z" title="Updated 2021-03-11 18:01:13">2021-03-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="顺序表与链表"><a href="#顺序表与链表" class="headerlink" title="顺序表与链表"></a>顺序表与链表</h3><h4 id="1-顺序表-数组"><a href="#1-顺序表-数组" class="headerlink" title="1. 顺序表(数组)"></a>1. 顺序表(数组)</h4><blockquote>
+<p>顺序表是在计算机内存中以数组的形式保存的线性表，是指用一组地址连续的存储单元依次存储数据元素的线性结构。线性表采用顺序存储的方式存储就称之为顺序表。顺序表是将表中的结点依次存放在计算机内存中一组地址连续的存储单元中</p>
+</blockquote>
+<h5 id="顺序表的优点："><a href="#顺序表的优点：" class="headerlink" title="顺序表的优点："></a>顺序表的优点：</h5><p>存储的数据是连续的，访问数据可以一次定位，时间复杂度为O(1)</p>
+<h5 id="顺序表的缺点："><a href="#顺序表的缺点：" class="headerlink" title="顺序表的缺点："></a>顺序表的缺点：</h5><p>空间必须是连续的，如果要插入新的元素要换内存空间地址，如果内存太小满足不了顺序表的要求，则无法使用</p>
+<h4 id="2-单链表"><a href="#2-单链表" class="headerlink" title="2. 单链表"></a>2. 单链表</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><ul>
+<li>链表是一种非线性、非顺序的物理结构，是由若干个节点组成。</li>
+<li>链表采用的是“见缝插针”的存储方法，不要求内存连续，靠next指针关联起来。</li>
+<li>链表的物理存储方式为随机存储，访问方式为顺序访问。</li>
+<li>查找节点的时间复杂度为O(n)，插入、删除节点的时间复杂度为O(1)。</li>
+<li>链表适用于写操作多，读操作少的场景。</li>
+</ul>
+<h5 id="顺序表-数组-与单链表对比"><a href="#顺序表-数组-与单链表对比" class="headerlink" title="顺序表(数组)与单链表对比"></a>顺序表(数组)与单链表对比</h5><ul>
+<li>数组静态分配内存，链表动态分配内存；</li>
+<li>数组在内存中连续(查询快)，链表不连续（查询需要从head节点开始遍历）；</li>
+<li>数组元素在栈区，链表元素在堆区;</li>
+<li>数组查询快、增删慢；链表增删快、查询慢</li>
+</ul>
+<h5 id="单链表js实现"><a href="#单链表js实现" class="headerlink" title="单链表js实现"></a>单链表<code>js</code>实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 定义一个节点</span><br><span class="line"> * 分别存储data和下一个节点的地址next</span><br><span class="line"> * 尾节点指向null 一个节点则next指向null</span><br><span class="line"> *&#x2F;</span><br><span class="line">class Node &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.element &#x3D; element;</span><br><span class="line">    this.next &#x3D; null;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 定义一个链表</span><br><span class="line"> *&#x2F;</span><br><span class="line">class LinkList &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    &#x2F;&#x2F; 当前头节点</span><br><span class="line">    this.head &#x3D; new Node(&#39;head&#39;);</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 查找某一个元素</span><br><span class="line">  find(item) &#123;</span><br><span class="line">    let currentNode &#x3D; this.head;</span><br><span class="line">    while (currentNode.next !&#x3D;&#x3D; null &amp;&amp; currentNode.element !&#x3D;&#x3D; item) &#123;</span><br><span class="line">      currentNode &#x3D; currentNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 如果没有找到则返回最后一个节点 一个节点则是头节点</span><br><span class="line">    return currentNode;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 插入某一个元素</span><br><span class="line">  insert(newitem, item) &#123;</span><br><span class="line">    let newNode &#x3D; new Node(newitem);</span><br><span class="line">    let currentNode &#x3D; this.find(item);</span><br><span class="line">    newNode.next &#x3D; currentNode.next;</span><br><span class="line">    currentNode.next &#x3D; newNode;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 查找某一个节点的前一个结点</span><br><span class="line">  preNode(item) &#123;</span><br><span class="line">    let currentNode &#x3D; this.head;</span><br><span class="line">    while (currentNode.next !&#x3D;&#x3D; null &amp;&amp; currentNode.next.element !&#x3D;&#x3D; item) &#123;</span><br><span class="line">      currentNode &#x3D; currentNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    return currentNode;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 删除一个节点</span><br><span class="line">  remove(item) &#123;</span><br><span class="line">    let preNode &#x3D; this.preNode(item);</span><br><span class="line">    if (!(preNode.next &#x3D;&#x3D;&#x3D; null)) &#123;</span><br><span class="line">      preNode.next &#x3D; preNode.next.next;</span><br><span class="line">      &#x2F;&#x2F; return true;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; return false;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F;修改一个节点</span><br><span class="line">  edit(item, newitem) &#123;</span><br><span class="line">    let node &#x3D; this.find(item);</span><br><span class="line">    node.element &#x3D; newitem;</span><br><span class="line">    &#x2F;&#x2F; return node;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 输出所有节点的值</span><br><span class="line">  display() &#123;</span><br><span class="line">    let currentNode &#x3D; this.head;</span><br><span class="line">    &#x2F;&#x2F; 首先打印头节点的值</span><br><span class="line">    console.log(currentNode.element);</span><br><span class="line">    while (currentNode.next !&#x3D;&#x3D; null) &#123;</span><br><span class="line">      console.log(currentNode.next.element);</span><br><span class="line">      currentNode &#x3D; currentNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 判断链表中是否有循环</span><br><span class="line">  hasCircle() &#123;</span><br><span class="line">    &#x2F;&#x2F; 定义两个指针</span><br><span class="line">    let slowPoint &#x3D; this.head;</span><br><span class="line">    let fastPoint &#x3D; this.head;</span><br><span class="line">    while (fastPoint !&#x3D;&#x3D; null) &#123;</span><br><span class="line">      slowPoint &#x3D; slowPoint.next;</span><br><span class="line">      fastPoint &#x3D; fastPoint.next.next;</span><br><span class="line">      if (slowPoint &#x3D;&#x3D;&#x3D; fastPoint) &#123;</span><br><span class="line">        return true;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const linkList &#x3D; new LinkList();</span><br><span class="line"></span><br><span class="line">linkList.insert(&quot;A&quot;);</span><br><span class="line">linkList.insert(&quot;B&quot;);</span><br><span class="line">linkList.insert(&quot;C&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;测试单项链表是否有循环</span><br><span class="line">linkList.find(&quot;C&quot;).next &#x3D; linkList.find(&quot;A&quot;);</span><br><span class="line"></span><br><span class="line">console.log(linkList.hasCircle()); &#x2F;&#x2F; true</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; linkList.display();</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Su Qingqing</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://qingqingsu.github.io/2020/01/30/JavaScript%E2%80%94%E2%80%94%E9%A1%BA%E5%BA%8F%E8%A1%A8%E3%80%81%E9%93%BE%E8%A1%A8/">https://qingqingsu.github.io/2020/01/30/JavaScript%E2%80%94%E2%80%94%E9%A1%BA%E5%BA%8F%E8%A1%A8%E3%80%81%E9%93%BE%E8%A1%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/02/11/npm%E7%9A%84%E5%88%9D%E6%AD%A5%E8%A7%81%E8%A7%A3/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">npm的初步见解</div></div></a></div><div class="next-post pull-right"><a href="/2020/01/07/AJAX/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">AJAX</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Su Qingqing</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E4%B8%8E%E9%93%BE%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">顺序表与链表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A1%BA%E5%BA%8F%E8%A1%A8-%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">1. 顺序表(数组)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">顺序表的优点：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">顺序表的缺点：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%8D%95%E9%93%BE%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">2. 单链表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8-%E6%95%B0%E7%BB%84-%E4%B8%8E%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AF%B9%E6%AF%94"><span class="toc-number">1.2.2.</span> <span class="toc-text">顺序表(数组)与单链表对比</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8js%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.3.</span> <span class="toc-text">单链表js实现</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Uniapp实现多端开发"/></a><div class="content"><a class="title" href="/2021/05/05/Uniapp%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Uniapp实现多端开发">Uniapp实现多端开发</a><time datetime="2021-05-05T06:04:52.000Z" title="Created 2021-05-05 14:04:52">2021-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浅谈TypeScript"/></a><div class="content"><a class="title" href="/2021/04/15/%E6%B5%85%E8%B0%88TypeScript/" title="浅谈TypeScript">浅谈TypeScript</a><time datetime="2021-04-15T03:12:21.000Z" title="Created 2021-04-15 11:12:21">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="js三大家族"/></a><div class="content"><a class="title" href="/2021/04/01/js%E4%B8%89%E5%A4%A7%E5%AE%B6%E6%97%8F/" title="js三大家族">js三大家族</a><time datetime="2021-04-01T02:36:26.000Z" title="Created 2021-04-01 10:36:26">2021-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JS 中的闭包与模块"/></a><div class="content"><a class="title" href="/2021/03/11/hello-world/" title="JS 中的闭包与模块">JS 中的闭包与模块</a><time datetime="2021-03-11T15:40:29.326Z" title="Created 2021-03-11 23:40:29">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/cookie-session/" title="cookie session"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cookie session"/></a><div class="content"><a class="title" href="/2021/03/11/cookie-session/" title="cookie session">cookie session</a><time datetime="2021-03-11T14:38:25.000Z" title="Created 2021-03-11 22:38:25">2021-03-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://up.36992.com/pic/e6/c5/51/e6c551e768092c8655292d89a4034a74.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Su Qingqing</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
